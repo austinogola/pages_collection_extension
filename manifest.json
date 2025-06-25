@@ -12,7 +12,9 @@
     "default_popup": "popup.html"
   },
   "web_accessible_resources": [{
-    "resources": ["registry.json", "registry.txt", "sites.json", "merchants.json", "search_pages.json"],
+    "resources": [
+      "registry.json", "registry.txt", "sites.json", 
+    "merchants.json", "search_pages.json","blacklist_whitelist/*","non_blacklist_non_pharmacy.json"],
     "matches": ["<all_urls>"]
   }]
 }

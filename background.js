@@ -69,14 +69,24 @@ function processSite(url, queue) {
     // const domain = uRLL.hostname;
     //  console.log(registry)
     setTimeout(() => {
-        chrome.tabs.remove(tabId);
-        activeTabs--;
-        processQueue(queue);
+        if(TEST_TYPE=='non_block_non_pharmacy'){
+          chrome.tabs.reload(tabId)
+          setTimeout(() => {
+              chrome.tabs.remove(tabId);
+              activeTabs--;
+              processQueue(queue);
+          }, 15000);
+        }else{
+           chrome.tabs.remove(tabId);
+           activeTabs--;
+          processQueue(queue);
+        }
+        
     //   chrome.cookies.getAll({ name:registry.name }, (cookies) => {
 
         
     //   });
-    }, 25000);
+    }, 15000);
   });
 }
 
@@ -118,7 +128,17 @@ async function loadNormalSites() {
   return [...new Set(sites)];
 }
 
-let TEST_TYPE='normal_pages'
+
+async function loadNonBlackListAndNonPharmacySites() {
+  const [ sites] = await Promise.all([
+    fetch(chrome.runtime.getURL("non_blacklist_non_pharmacy.json")).then(r => r.json())
+  ]);
+//   console.log(sites)
+  return [...new Set(sites)];
+}
+
+
+let TEST_TYPE='non_block_non_pharmacy'
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "startCookieCheck") {
     results = [];
@@ -133,6 +153,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     } 
     else if(TEST_TYPE=='search_pages'){
         loadSearchSites().then((sites) => {
+          queue = sites;
+          processQueue(sites);
+        });
+    } 
+    else if(TEST_TYPE=='non_block_non_pharmacy'){
+        loadNonBlackListAndNonPharmacySites().then((sites) => {
           queue = sites;
           processQueue(sites);
         });

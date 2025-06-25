@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Pages Data Collection Extension",
+  "version": "1.0",
+  "description": "Checks Data Collected For Merchant/Search pages",
+  "permissions": ["cookies", "tabs", "scripting","storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [{
+    "resources": ["registry.json", "registry.txt", "sites.json", "merchants.json", "search_pages.json"],
+    "matches": ["<all_urls>"]
+  }]
+}

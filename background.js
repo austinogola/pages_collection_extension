@@ -101,7 +101,24 @@ async function loadMerchantSites() {
   return [...new Set(sites)];
 }
 
-let TEST_TYPE='merchant'
+async function loadSearchSites() {
+  const [ sites] = await Promise.all([
+    fetch(chrome.runtime.getURL("search_pages.json")).then(r => r.json())
+  ]);
+//   console.log(sites)
+  return [...new Set(sites)];
+}
+
+
+async function loadNormalSites() {
+  const [ sites] = await Promise.all([
+    fetch(chrome.runtime.getURL("normal_sites.json")).then(r => r.json())
+  ]);
+//   console.log(sites)
+  return [...new Set(sites)];
+}
+
+let TEST_TYPE='normal_pages'
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "startCookieCheck") {
     results = [];
@@ -114,7 +131,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           processQueue(sites);
         });
     } 
-
+    else if(TEST_TYPE=='search_pages'){
+        loadSearchSites().then((sites) => {
+          queue = sites;
+          processQueue(sites);
+        });
+    } 
+    else if(TEST_TYPE=='normal_pages'){
+        loadNormalSites().then((sites) => {
+          queue = sites;
+          processQueue(sites);
+        });
+    } 
     
 
     sendResponse({ started: true });

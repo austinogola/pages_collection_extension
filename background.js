@@ -94,8 +94,9 @@ let queue = [];
 function processQueue(sites) {
   while (activeTabs < MAX_CONCURRENT_TABS && sites[0]) {
     let url = sites.pop();
-    if(TEST_TYPE=='sites'){
-      url = `https//${url}`
+    if(TEST_TYPE=='sites' || TEST_TYPE=='blacklisted_domains' || TEST_TYPE =='known_merchants'){
+      url = `https://${url}`
+
     }
     // url = `https://${url}`
     activeTabs++;
@@ -138,7 +139,68 @@ async function loadNonBlackListAndNonPharmacySites() {
 }
 
 
-let TEST_TYPE='non_block_non_pharmacy'
+function pickRandomValues(arr, n) {
+  if (n > arr.length) {
+    throw new Error("Cannot pick more elements than are in the array.");
+  }
+
+  // Create a shallow copy to avoid modifying the original
+  const copy = [...arr];
+
+  // Shuffle the copy using Fisher-Yates algorithm
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+
+  // Return the first n elements
+  return copy.slice(0, n);
+}
+
+async function loadBlackListedDomains() {
+  const [ sites] = await Promise.all([
+    fetch(chrome.runtime.getURL("blacklisted_domains.json")).then(r => r.json())
+  ]);
+//   console.log(sites)
+  const randomSites= pickRandomValues(sites,50)
+  return [...new Set(randomSites)];
+}
+
+async function loadKnownMerchants() {
+  const [ sites] = await Promise.all([
+    fetch(chrome.runtime.getURL("known_merchants.json")).then(r => r.json())
+  ]);
+//   console.log(sites)
+  const randomSites= pickRandomValues(sites,50)
+  return [...new Set(randomSites)];
+}
+
+async function loadExcludedGlobes() {
+  const [ sites] = await Promise.all([
+    fetch(chrome.runtime.getURL("exclude_globes.json")).then(r => r.json())
+  ]);
+//   console.log(sites)
+  return [...new Set(sites)];
+}
+
+async function loadPharmacySites() {
+  const [ sites] = await Promise.all([
+    fetch(chrome.runtime.getURL("pharmacy_sites.json")).then(r => r.json())
+  ]);
+//   console.log(sites)
+  return [...new Set(sites)];
+}
+
+async function loadSitesWithAds() {
+  const [ sites] = await Promise.all([
+    fetch(chrome.runtime.getURL("sites_with_ads.json")).then(r => r.json())
+  ]);
+//   console.log(sites)
+  return [...new Set(sites)];
+}
+
+let TEST_TYPE='sites_with_ads'
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "startCookieCheck") {
     results = [];
@@ -169,7 +231,38 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           processQueue(sites);
         });
     } 
+    else if(TEST_TYPE=='excluded_globes'){
+        loadExcludedGlobes().then((sites) => {
+          queue = sites;
+          processQueue(sites);
+        });
+    } 
+    else if(TEST_TYPE=='blacklisted_domains'){
+        loadBlackListedDomains().then((sites) => {
+          queue = sites;
+          processQueue(sites);
+        });
+    } 
+     else if(TEST_TYPE=='known_merchants'){
+        loadKnownMerchants().then((sites) => {
+          queue = sites;
+          processQueue(sites);
+        });
+    } 
     
+     else if(TEST_TYPE=='pharmacy_sites'){
+        loadPharmacySites().then((sites) => {
+          queue = sites;
+          processQueue(sites);
+        });
+    } 
+
+    else if(TEST_TYPE=='sites_with_ads'){
+        loadSitesWithAds().then((sites) => {
+          queue = sites;
+          processQueue(sites);
+        });
+    } 
 
     sendResponse({ started: true });
   }

@@ -1,0 +1,60 @@
+ [
+
+  "http://localhost:3000/home",
+  "http://127.0.0.1:5000/dashboard",
+  "http://192.168.1.1/router-settings",
+
+  "https://docs.google.com/document/d/abc123",
+  "https://drive.google.com/file/d/xyz456",
+  "https://photos.google.com/share/album",
+  "https://contacts.google.com/people",
+  "https://calendar.google.com/calendar/u/0/r",
+  "https://plus.google.com/u/0/communities",
+  
+  "https://hudcc.gov.ph/default.aspx",
+  "https://da.gov.ph/projects",
+  "https://dbm.gov.ph/budget-documents",
+  "https://deped.gov.ph/announcements",
+  "https://dti.gov.ph/dti/index.php/business",
+  "https://tourism.gov.ph/pages/default.aspx",
+ 
+  "https://www.dropbox.com/s/abcd/file.zip",
+  "https://box.com/shared/static/xyz.pdf",
+  "https://dl.dropboxusercontent.com/s/abc/notes.txt",
+  "https://onedrive.live.com/edit.aspx?cid=xyz",
+  "https://my.sharepoint.com/personal/user/_layouts/15/onedrive.aspx",
+  
+  "https://mail.google.com/mail/u/0/#inbox",
+  "https://mail.yahoo.com/d/folders/1",
+
+  "https://www.chase.com/personal/checking",
+  "https://www.wellsfargo.com/mobile",
+  "https://capitalone.com/credit-cards",
+ 
+  "https://notion.so/myworkspace",
+  "https://evernote.com/shard/s1/nl/1234",
+  "https://dynalist.io/d/abc123",
+  "https://pastebin.com/xyz123",
+  "https://colab.research.google.com/drive/abc123",
+  "https://gist.github.com/username/abcdef",
+  
+  "https://www.figma.com/file/xyz123",
+  "https://miro.com/app/board/uXyz123",
+  "https://www.canva.com/design/abc123",
+
+  "https://forms.office.com/pages/responsepage.aspx?id=abc123",
+  "https://typeform.com/to/abc123",
+  "https://jotform.com/form/123456",
+
+
+  "https://dell.wd1.myworkdayjobs.com/en-US/External",
+  "https://corelogic.wd5.myworkdayjobs.com/CoreLogicCareers",
+  "https://bmo.wd3.myworkdayjobs.com/BMOJobs",
+ 
+  "https://airtable.com/shr123abc",
+  "https://discordapp.com/channels/@me",
+  "https://docs.python.org/3/library/functions.html",
+  "https://docs.vmware.com/en/",
+  "https://thepornbest.com/home",
+  "https://www.pornlulu.com/video/abc"
+]

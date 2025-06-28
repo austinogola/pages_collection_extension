@@ -14,7 +14,8 @@
   "web_accessible_resources": [{
     "resources": [
       "registry.json", "registry.txt", "sites.json", 
-    "merchants.json", "search_pages.json","blacklist_whitelist/*","non_blacklist_non_pharmacy.json"],
+    "merchants.json", "search_pages.json","blacklist_whitelist/*","blacklisted_domains.json",
+    "non_blacklist_non_pharmacy.json","known_merchants.json","pharmacy_sites.json","sites_with_ads.json"],
     "matches": ["<all_urls>"]
   }]
 }
